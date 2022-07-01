@@ -21,6 +21,13 @@
 
             <button type="submit" class="registerbtn">SEACRH STUDENT</button>
             <a href="./" style="color:black">BACK TO HOME PAGE</a>
+            <br>
+            {{#if mesg1}}
+            <h3>Data Found!</h3>
+            {{/if}}
+            {{#if mesg2}}
+            <h3>Data not found</h3>
+            {{/if}}
         </form>
     </div>
 </body>

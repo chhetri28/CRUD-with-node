@@ -48,6 +48,56 @@ app.get("/addstudent",(req,res)=>{
         }
     });
 });
+
+app.get("/searchstudent",(req,res)=>{
+    const {phone}=req.query;
+    let qry ="select * from test where phone=?";
+    mysql.query(qry,[phone],(err,results)=>{
+        if(err) throw err;
+        else{
+            if(results.length>0){
+                res.render("search",{mesg1:true , mesg2:false});
+            }else{
+                res.render("search",{mesg1:false , mesg2:true});
+
+            }
+        }
+    });
+});
+
+app.get("/updatesearch",(req,res)=>{
+    const {phone}=req.query;
+    let qry ="select * from test where phone=?";
+    mysql.query(qry,[phone],(err,results)=>{
+        if(err) throw err;
+        else{
+            if(results.length>0){
+                res.render("update",{mesg1:true , mesg2:false, data:results});
+            }else{
+                res.render("update",{mesg1:false , mesg2:true});
+
+            }
+        }
+    });
+});
+
+
+app.get("/updatestudent", (req, res) => {
+    // fetch data
+
+    const { phone, name, gender } = req.query;
+    let qry = "update test set name=?, gender=? where phone=?";
+
+    mysql.query(qry, [name, gender, phone], (err, results) => {
+        if (err) throw err
+        else {
+            if (results.affectedRows > 0) {
+                res.render("update", { umesg: true })
+            }
+        }
+    })
+
+});
 //create Server
 app.listen(port,(err)=>{
     if(err) throw err;
